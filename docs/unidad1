@@ -1,0 +1,668 @@
+UNIVERSIDAD TECNOLOGICA DE TORREÓN
+
+
+INGENIERIA EN DESARROLLO Y      GESTION DE SOFTWARE
+
+                                         “Desarrollo WEB Profesional”
+
+Presenta:
+JOSUE LÓPEZ ÁLVAREZ
+      	 JORGE ALEJANDRO MONTOYA SALAS
+         MAXIMILANO RODRÍGUEZ MÁRQUEZ  
+     ANGEL ROBERTO IBAÑEZ CHÁVEZ   
+
+Docente:
+  JESUS ROBLEDO DEL TORO
+
+Nombre del proyecto:
+SISTEMA ACADÉMICO DE SEGUIMIENTO A FINANZAS Y ALUMNOS. V.1
+
+8° “A”
+
+
+
+Tabla de contenido
+Problemática y justificación.	4
+Problemática.	4
+Justificación.	4
+Objetivos específicos (alineados a los puntos claves a resolver).	5
+Digitalizar y centralizar la información	5
+Automatizar la gestión de expedientes y trámites	5
+Agilizar el control de pagos y procesos financieros	5
+Optimizar la atención al público	5
+Alcance del Proyecto (Alineado a la escalabilidad y cobertura del software).	6
+Cobertura Funcional	6
+Usuarios Objetivo	6
+Escalabilidad	6
+Limitaciones del Proyecto (Factores que delimitan la ejecución)	6
+Infraestructura institucional	6
+Resistencia al cambio y capacitación	6
+Migración inicial de datos	6
+Alcance de la versión inicial	6
+MVP (Producto Mínimo Viable)	7
+Módulos mínimos	7
+Características del MVP	7
+Requisitos Funcionales y No Funcionales.	8
+Requisitos Funcionales	8
+Requisitos No Funcionales.	8
+Análisis de Riesgos.	9
+Elección de metodología y roles del equipo.	10
+METODOLOGÍA SCRUM	10
+TRAZABILIDAD	10
+Separación del proyecto en tareas y Cronograma.	11
+Elección de estructura web y tecnologías	12
+Selección de patrones de diseño	13
+Introducción.	13
+Patrón seleccionado: MVC	13
+Aplicación de MVC en el proyecto	13
+Organización propuesta	13
+Justificación de la elección	14
+Ejemplo práctico: módulo de pagos	14
+Relación con el alcance del anteproyecto	15
+Conclusión	15
+Wireframes	16
+Búsquedas en el sitio web	21
+Oportunidades	21
+¿Qué información mececita el usuario para encontrar rápidamente un registro entre muchos registros?	21
+Ideas de búsquedas avanzadas por rubros con oportunidad	22
+Validación de la Información.	23
+1. FrontEnd Vs BackEnd	23
+2. Datos obligatorios – FrontEnd	24
+3. Inventario de validaciones por módulo	24
+4. Matriz de validación de información	25
+5. Matriz de validación y seguridad de la información	29
+
+WIREFRAMES
+Ilustración 1 Login	16
+Ilustración 2 Registro del Alumno	17
+Ilustración 3 Panel Principal	17
+Ilustración 4 Docentes	18
+Ilustración 5 Grupos y Tutor Escolar	18
+Ilustración 6 Control de Pagos	19
+Ilustración 7 Registro de Materias	19
+Ilustración 8 Vista de Padres	20
+Ilustración 9 Ficha de Pagos	20
+
+Problemática y justificación.
+Problemática.
+Existen escuelas las cuales administran su información con procedimientos manuales los cuales tienen un amplio alcance de mejora y optimización, las escuelas a las cuales aplicaría principalmente es a todas aquellas que usan todavía bitácoras manuales, Excel para la el seguimiento a alumnos, asignación de pagos, de maestros y materias, así mismo poder expandir el sistema de software, agilizando sus procesos para la reducción de tiempo, mayor productividad evitando largas filas de padres en algunas situaciones o saturación en atención. 
+Justificación.
+El proyecto es esencial para el desarrollo de cada escuela que lo requiera, esto servirá para generar respaldo a todos los datos actuales y futuros de la misma escuela, al tener una automatización en los expedientes, registros y/o tramites agilizando los tiempos para los empleados, sean directivos, escolares, maestros y facilitando el acceso y tiempos de los padres. El proyecto aparte de volver a los empleados de una manera más eficiente, eficaz, podrán externar sus tiempos "libres" a otros temas, como bien puede ser que a un proceso como el registro de expedientes de alumnos con sus padres que antes le tomaban 2 horas será recortado con el propio sistema a un máximo de 30 minutos, al ser una reducción significativa de tiempo los padres podrán tener la comodidad o facilidad de un menor tiempo en los registros. 
+
+ 
+Objetivo general (alineado a la meta principal del proyecto). 
+Desarrollar e implementar un sistema de software integral para la gestión escolar que automatice y optimice los procesos administrativos (asignación y control de pagos, registros de maestros, alumnos y materias), reduciendo los tiempos de atención y trámite para mejorar la productividad institucional y la experiencia de la comunidad educativa. 
+Objetivos específicos (alineados a los puntos claves a resolver). 
+Digitalizar y centralizar la información
+Sustituir el uso de bitácoras físicas y hojas de cálculo (Excel) por una base de datos estructurada y segura que respalde la información actual y futura de la institución. 
+Automatizar la gestión de expedientes y trámites
+Diseñar módulos para el registro y consulta ágil de alumnos, padres de familia, docentes y asignación de materias, reduciendo el tiempo de atención en procesos clave (por ejemplo, de 2 horas a un máximo de 30 minutos). 
+Agilizar el control de pagos y procesos financieros
+Automatizar la asignación y seguimiento de pagos escolares para minimizar el margen de error manual y eliminar cuellos de botella en ventanilla. 
+Optimizar la atención al público
+Reducir significativamente las Filas de espera y la saturación en los servicios de atención a padres de familia mediante consultas y registros más rápidos. 
+
+
+
+
+
+
+
+
+
+Alcance del Proyecto (Alineado a la escalabilidad y cobertura del software).
+Cobertura Funcional
+El sistema abarcará la gestión de expedientes (alumnos y tutores), control de personal docente, asignación de materias/horarios, registro de pagos y generación de respaldos digitales de información. 
+Usuarios Objetivo
+	Directivos, personal de control escolar/administrativo, docentes y padres de familia. 
+Escalabilidad
+El software estará estructurado bajo una arquitectura modular y escalable, permitiendo en fases futuras la incorporación de nuevos módulos (como portal de calificaciones en línea, pagos en plataforma web o notificaciones automáticas) sin necesidad de reestructurar el sistema base. 
+	Limitaciones del Proyecto (Factores que delimitan la ejecución) 
+Infraestructura institucional
+El correcto funcionamiento del software dependerá de que la institución educativa cuente con un equipo de cómputo básico y conexión a internet estable. 
+Resistencia al cambio y capacitación
+La adopción del sistema requerirá un periodo inicial de capacitación para el personal acostumbrado a métodos tradicionales (bitácoras/Excel). 
+Migración inicial de datos
+El tiempo empleado en la digitalización e importación de la información histórica dependerá del volumen y estado de los archivos físicos o de Excel existentes. 	
+Alcance de la versión inicial
+Esta primera entrega se enfocará exclusivamente en los procesos administrativos centrales descritos; integraciones externas o pasarelas de pago en línea quedarán fuera del alcance inmediato de este anteproyecto. 
+
+
+
+
+MVP (Producto Mínimo Viable)
+Módulos mínimos
+1.	Gestión de alumnos y tutores.
+•	Alta y consulta de alumnos.
+•	Registro básico de padres/tutores.
+2.	Control de pagos escolares.
+•	Registro de pagos (fecha, monto, concepto).
+•	Consulta rápida de estado de cuenta por alumno.
+•	Generar informe por alumno
+3.	Gestión básica de docentes y materias
+•	Alta de maestros.
+•	Asignación de materias a alumnos.
+•	Informe de calificaciones
+•	Generar informe académico
+Características del MVP
+•	Interfaz sencilla (puede ser web con login básico).
+•	Base de datos centralizada (ej. MySQL).
+•	Reporte/Informe: lista de alumnos con pagos pendientes, alumno con mapa de materias, informe academico con calificaciones.
+ 
+Requisitos Funcionales y No Funcionales.
+Requisitos Funcionales 
+•	El sistema debe poder asignar roles (administrador, maestros, padres, alumnos, recepcionista, cajero-escolar, rh ). 
+•	El sistema mostrar los roles a los usuarios. 
+•	El sistema debe tener un inicio de sesión. 
+•	El sistema debe mostrar los datos consultados y limitados por el rol asignado. 
+•	El sistema debe permitir registros de personas(alumnos), con datos relacionados a el (fecha de inscripción, padres a cargo, tutor legal[opcional], año escolar, estatus de pago, curso, grado). 
+•	El sistema debe generar/asignar maestros a un grupo como tutor escolar. 
+•	El sistema debe generar ficha de pago 
+•	El sistema debe registrar las materias. 
+•	El sistema debe poder asignar materias a los profesores. 
+•	El sistema debe modificar, agregar, agregar y eliminar dependiendo del usuario 
+Requisitos No Funcionales.
+•	El sistema debe garantizar un tiempo de respuesta menor a 10 segundos en las consultas de registros y expedientes bajo condiciones normales de red. 
+•	El sistema debe contar con una disponibilidad operativa del 99% durante las horas hábiles de la institución escolar. 
+•	El sistema debe restringir el acceso a los datos y módulos mediante autenticación segura y cifrado de credenciales según el rol asignado. 
+•	El sistema debe realizar respaldos automáticos y periódicos de la base de datos para asegurar la persistencia y el resguardo de la información institucional. 
+•	El sistema debe contar con una interfaz gráfica intuitiva y fácil de usar, minimizando el tiempo de adaptación para el personal acostumbrado a métodos tradicionales. 
+•	El sistema debe ser compatible y operar de manera óptima utilizando el equipo de cómputo básico y la conexión a internet con la que cuenta la institución. 
+•	El sistema debe poseer una arquitectura modular y escalable que permita la integración de nuevas funciones futuras sin afectar el funcionamiento del software base. 
+Análisis de Riesgos.
+ID	Riesgos	p	i	Nivel	Respuesta
+R1	Resistencia al cambio: Los usuarios finales no quieren el sistema	1	2	2	Crear interfaces muy simples para mejor entendimiento.
+R2	Transcripciones incompletas: Los registros o excel tienen falta de informacion	2	4	8	Revisar y depurar los archivos antes de migrarlos, 
+validar los campos obligatorios y solicitar la información 
+faltante a los responsables.
+R3	Dificultad de adaptacion: Los usuarios no terminan de comprender el sistema	4	2	8	Demostracion desde el inicio para involucrarlos
+ y responder dudas.
+R4	saturacion de informacion: La informacion en pantalla proboca angustia o estrés en usuario	4	2	8	Evitar el mal diseño del front-end y visualizar ejemplos 
+donde no sature informacion
+R5	apagones: Se va la luz en el plantel/institucion	1	5	5	Crear respaldos para la recuperación de datos.
+R6	bloqueo por incios de sesion: Los administrativos olvidan sus claves	3	2	6	Modulo de recuperar contraseña ya sea por su 
+correo o numero de celular.
+R7	perdidas de informacion: Falta de informacion por omision de padres o administrativos	3	5	15	Validación de datos para terminar el registro,
+ Ej. Si no ingresa su CURP no permitirá hacer el registro.
+R8	bajo rendimiento: Los usuarios o los dispositivos provocan retrasos	3	3	9	Pedir requisitos minimos en los equipos de computo, 
+trabajar en modo offline.
+R9	errores de migracion: La informacion no se registra correctamente	4	3	12	Migrar por etapas, utilizando plantilla 
+unica para validar los datos ingresados.}
+R10	ausencia de integrante de equipo: Falta un compañero	2	4	8	Capacitación constante, preguntas a los docentes 
+para conocer el estado entre el proyecto y docente.
+R11	Accesos no autorizados: Un usuario intenta ingresar a otro 	3	5	15	Implementar autenticación segura, 
+control de acceso basado en roles, 
+permisos por módulo y validaciones en el servidor. 
+Registrar los intentos de acceso sospechosos.
+R12	Retrasos del equipo: El o los avances no se cumplen en el tiempo estimado	3	4	12	Establecer un cronograma con fechas límite y responsables, 
+revisar los avances periódicamente y redistribuir las tareas 
+cuando existan retrasos. 
+R13	Falta de comunicación: No hay comunicación entre los desarrolladores	3	5	15	Realizar reuniones periódicas, utilizar una plataforma 
+compartida para organizar tareas
+ y documentar acuerdos, cambios y avances del proyecto.
+R14	Cambios de requisitos: Los clientes cambian, descartan o añaden funciones	4	4	16	Definir y aprobar los requisitos iniciales con el cliente,
+ documentar cada solicitud de cambio y 
+evaluar su impacto en el tiempo, costo y 
+alcance antes de implementarla.
+ 
+Elección de metodología y roles del equipo.
+METODOLOGÍA SCRUM
+	Justificación: Se optó por esta metodología por la facilidad de los Sprint para las tareas y como se va a estar juntas periódicas para poder ver avances, o tareas que tienen para cuando se registran los cambios nos facilitara la sincronización del equipo manteniendo una estabilidad que nos harán cumplir los propios objetivos.
+	Product Owner (PO) → Josue López Álvarez
+	Responsable de la visión del producto.
+	Define prioridades en el Product Backlog (qué se construye primero).
+	Representa las necesidades de los usuarios (directivos, padres, administrativos).
+	Scrum Master (SM) → Jorge Alejandro Montoya Salas
+	Facilita el proceso Scrum.
+	Elimina impedimentos (ej. problemas técnicos, bloqueos de comunicación).
+	Asegura que el equipo siga la metodología ágil.
+Equipo de Desarrollo (Dev Team) → Maximiliano Rodríguez Márquez y Angel Roberto Ibañez Chavez
+Construyen el sistema: base de datos, interfaz, lógica de negocio.
+Se autoorganizan para cumplir los objetivos del sprint.
+TRAZABILIDAD
+	Sprint Goal
+•	Tener un módulo funcional para registrar alumnos y pagos.
+Sprint Backlog
+•	Crear base de datos con tablas: alumnos, tutores, pagos.
+•	Pantalla de alta de alumno.
+•	Pantalla de registro de pago.
+•	Consulta de pagos pendientes.
+ 
+Separación del proyecto en tareas y Cronograma.
+Sprint 1: Arquitectura, Roles y Requerimientos Base
+Fechas: 29 de Septiembre – 12 de Octubre
+Objetivo: Establecer las bases conceptuales, definir patrones de diseño, requerimientos de usuarios y necesidades técnicas.
+Tareas asignadas del cronograma:
+•	Establecer patrón de diseño (Definición de arquitectura inicial).
+•	Establecer roles de usuario y funciones únicas de usuario.
+•	Establecer necesidades técnicas por apartados.
+•	Definir apartados principales del sistema.
+Entregable clave (Definition of Done): Documento de arquitectura, especificación de requerimientos y matriz de roles/permisos.
+Sprint 2: Diseño de Datos y Diagramación de Navegación
+Fechas: 13 de Octubre – 26 de Octubre
+Objetivo: Diseñar la estructura de almacenamiento de datos y el flujo de navegación funcional del sistema.
+Tareas asignadas del cronograma:
+•	Diseñar esquema de base de datos (Modelado ER, tablas y relaciones).
+•	Establecer rutas de navegación (Wireframes / Flujogramas de usuario).
+•	Inicio de preparación para la implementación de funciones de usuario (26-oct).
+Entregable clave (Definition of Done): Modelo de datos validado (DDL/DER) y diagrama de navegación de apartados.
+Sprint 3: Base de Datos y Módulo de Autenticación (Login)
+Fechas: 27 de Octubre – 10 de Noviembre
+Objetivo: Implementar la base de datos física, la conexión de la aplicación y el backend/frontend del sistema de Login.
+Tareas asignadas del cronograma:
+•	Desarrollar base de datos física e implementar conexión.
+•	Desarrollar Login (módulo de autenticación y sesiones).
+•	Inicio de desarrollo de vista principal y módulos por apartados.
+•	Implementación progresiva de funciones de usuario (Bloque 1).
+Entregable clave (Definition of Done): Base de datos desplegada con conexión activa y módulo de login funcional.
+Sprint 4: Vista Principal, Módulos por Apartados y Navegación
+Fechas: 11 de Noviembre – 30 de Noviembre
+Objetivo: Construir las vistas principales, módulos funcionales, filtros de búsqueda y navegación entre pantallas.
+Tareas asignadas del cronograma:
+•	Finalizar desarrollo de vista principal y módulos por apartados.
+•	Establecer e implementar filtros de búsqueda.
+•	Desarrollar navegación entre apartados.
+•	Implementación progresiva de funciones de usuario (Bloque 2).
+Entregable clave (Definition of Done): Sistema funcional navegable con búsqueda, vistas integradas y lógica de negocio core.
+Sprint 5: Pruebas de Login, Seguridad, Cierre de Funciones y Despliegue
+Fechas: 01 de Diciembre – 7 de Diciembre
+Objetivo: Ejecutar pruebas funcionales y de seguridad, corregir vulnerabilidades y finalizar la implementación de funciones de usuario restantes.
+Tareas asignadas del cronograma:
+•	Pruebas de Login (autenticación, sesión, tokens).
+•	Pruebas de seguridad en campos de entrada (sanitización, SQLi, XSS).
+•	Finalizar funciones de usuarios restantes y ajustes finales.
+•	Estabilización del sistema y preparación para pase a producción.
+Entregable clave Reporte de QA/Seguridad, sistema probado y listo para producción.
+5. Cuadro Resumen del Plan de Sprints
+Sprint	Fechas	Fases Involucradas	Entregables Principales
+Sprint 1	29-Sep a 12-Oct	Diseño	Arquitectura, Roles, Requerimientos
+Sprint 2	13-Oct a 26-Oct	Diseño / Prep. Dev	Modelo Base de Datos, Rutas Navegación
+Sprint 3	27-Oct a 10-Nov	Desarrollo	Base de Datos física, Conexión, Login
+Sprint 4	11-Nov a 30-Nov	Desarrollo	Vista Principal, Módulos, Filtros, Navegación
+Sprint 5	01-Dic a 7-Dic	Pruebas / Cierre	Pruebas Login, Seguridad, Cierre de Funciones
+
+
+Elección de estructura web y tecnologías 
+	
+Elemento	Tecnología propuesta	Justificación
+Backend	PHP con Laravel 	Gestiona rutas, controladores, validaciones del servidor, autenticación, autorización y lógica de negocio.
+Lenguaje	PHP	Permite desarrollar la lógica de la aplicación mediante un framework web estructurado.
+Base de datos	MySQL	Almacena y relaciona alumnos, inscripciones, grupos, docentes, calificaciones, pagos, usuarios y comprobantes.
+Interfaz	Blade, HTML, CSS y JavaScript	Permite construir formularios, tablas, menús y paneles administrativos sin requerir inicialmente un frontend independiente.
+ORM	Eloquent	Facilita consultar y modificar datos a través de modelos y relaciones.
+Migraciones	Laravel Migrations	Permite versionar y reproducir la estructura de la base de datos.
+Control de versiones	Git y GitHub	Facilita la colaboración, revisión de cambios y recuperación de versiones anteriores.
+Pruebas	PHPUnit o Pest	Permite comprobar reglas de negocio, validaciones, permisos y operaciones críticas.
+Gestión de tareas	Jira, si lo solicita la rúbrica	Ayuda a asignar responsables, organizar tareas y dar seguimiento al desarrollo.
+
+Decisión inicial: desarrollar una aplicación web con Laravel bajo el patrón Modelo–Vista–Controlador (MVC), MySQL como base de datos relacional y Blade para las vistas. Esta propuesta debe confirmarse con los requisitos definitivos y la rúbrica.
+
+	Selección de patrones de diseño. 
+Introducción.
+El proyecto Sistema Académico de Seguimiento a Finanzas y Alumnos V.1 tiene como objetivo desarrollar un sistema integral para automatizar y optimizar procesos administrativos escolares, como el registro de alumnos y tutores, la administración de docentes, la asignación de materias y horarios, así como el seguimiento de pagos. Debido a que el anteproyecto plantea una solución modular y escalable, es necesario utilizar una estructura que permita organizar correctamente las responsabilidades del software y facilitar su crecimiento.
+Patrón seleccionado: MVC
+Se propone utilizar el patrón Modelo–Vista–Controlador (MVC) como estructura principal del sistema. MVC divide una aplicación en tres componentes: Modelo, Vista y Controlador. Esta separación permite evitar que la interfaz, el procesamiento de las solicitudes y el manejo de los datos se encuentren mezclados en una sola parte del programa.
+Aplicación de MVC en el proyecto
+Por ejemplo, cuando un integrante del personal administrativo registra a un nuevo alumno, la Vista presenta el formulario de captura. Al enviarlo, el Controlador recibe la solicitud y coordina el registro. El Modelo se encarga de trabajar con la información correspondiente y almacenarla en la base de datos. Finalmente, el resultado vuelve a la Vista para informar al usuario si el registro fue realizado correctamente.
+Organización propuesta
+La separación de responsabilidades permitiría organizar los módulos del sistema de una forma similar a la siguiente:
+MODELOS
+  • Alumno
+  • Tutor
+  • Maestro
+  • Materia
+  • Pago
+  • Horario
+CONTROLADORES
+  • AlumnoController
+  • MaestroController
+  • MateriaController
+  • PagoController
+  • HorarioController
+VISTAS
+  • Alumnos
+  • Maestros
+  • Materias
+  • Pagos
+  • Horarios
+Justificación de la elección
+	• Separación de responsabilidades: permite mantener independiente la presentación, el control de las operaciones y el manejo de los datos.
+• Mantenimiento: al estar dividido en componentes, resulta más sencillo localizar y modificar una parte del sistema sin afectar innecesariamente a las demás.• Escalabilidad: el anteproyecto contempla incorporar posteriormente módulos como calificaciones en línea, pagos mediante plataforma web y notificaciones automáticas. Una estructura organizada facilita estas ampliaciones.
+• Organización por módulos: el sistema contará con diferentes áreas funcionales, como alumnos, docentes, materias, horarios y pagos, por lo que MVC permite mantener una estructura clara.
+• Trabajo en equipo: la separación de componentes facilita distribuir actividades de desarrollo entre los integrantes del equipo.
+Ejemplo práctico: módulo de pagos
+En el módulo de pagos, la Vista podría mostrar al personal administrativo los pagos pendientes de un alumno y permitir registrar un nuevo pago. El PagoController recibiría la solicitud y coordinaría la operación correspondiente. El Modelo Pago manejaría los datos relacionados con el concepto, monto, fecha, alumno y estado del pago. De esta manera, cada componente conserva una responsabilidad específica.
+Relación con el alcance del anteproyecto
+La elección de MVC es coherente con el alcance planteado para el proyecto, ya que la primera versión abarcará expedientes de alumnos y tutores, personal docente, materias, horarios, pagos y respaldos digitales. Además, el anteproyecto establece explícitamente que el software deberá permitir agregar nuevos módulos en fases posteriores sin reestructurar el sistema base. La separación proporcionada por MVC contribuye a mantener una organización adecuada conforme aumenten las funcionalidades.
+Conclusión
+El patrón Modelo–Vista–Controlador (MVC) se considera una opción adecuada para el Sistema Académico de Seguimiento a Finanzas y Alumnos V.1 porque permite dividir el software en responsabilidades claras, facilita su mantenimiento y favorece la incorporación futura de nuevos módulos. Su aplicación ayudaría a conservar una estructura ordenada conforme el sistema evolucione y aumente la cantidad de procesos administrativos que administra.
+Nota técnica
+MVC suele considerarse un patrón arquitectónico. Si la actividad solicita específicamente seleccionar uno de los patrones de diseño GoF (por ejemplo, Strategy, Observer, Factory, Facade o Singleton), sería necesario elegir un patrón de esa clasificación y justificar su aplicación en una función concreta del sistema.
+Escalabilidad
+El software o sistema tiene un área amplia de escalabilidad al ser un ámbito escolar, esto nos facilita la agregación de mas módulos como lo pueden ser nuevos apartados como la asignación de reuniones, control de citas, psicólogos de alumnos, y a su vez puede ser ampliado a un sector escolar de secundaria como también puede ser a más escuelas donde se compartan maestros o el director este bajo el cargo de alguien más y este tenga el “control” de estas escuelas para facilitar el trabajo y control de las mismas.
+En nuestro sistema escolar proponemos utilizar el patrón de diseño Singleton mediante el contenedor de servicios de Laravel. Este permite crear una sola instancia de un servicio y reutilizarla cuando distintos componentes la necesiten, durante la vida de ese contenedor.
+Por ejemplo, podemos aplicarlo a un servicio de configuración escolar que proporcione el nombre de la institución y el ciclo escolar activo a los módulos de alumnos, materias y pagos. Así evitamos crear repetidamente el mismo servicio y centralizamos su acceso.
+Singleton complementa a MVC: MVC organiza el sistema en Modelo, Vista y Controlador, mientras que Singleton controla la creación y reutilización de un servicio específico.
+	Wireframes
+Nota: En la parte superior se identifica el rol de cada usuario y las vistas correspondientes a sus permisos, como administrador, cajero escolar y padre de familia. Asimismo, algunos wireframes se reutilizan entre distintos roles, ya que comparten una estructura y diseño similares; las diferencias se encuentran principalmente en ciertos elementos, funcionalidades y opciones disponibles según los permisos de cada usuario.
+
+
+	
+	
+	 
+
+Búsquedas en el sitio web 
+En nuestro sistema escolar, tiene mucha oportunidad real de hacer una verdadera BÚSQUEDA AVANZADA REAL, no solamente poner una caja que diga: "Buscar Alumno"
+Oportunidades
+	Búsqueda avanzada de alumnos
+El sistema deberá permitir al usuario realizar búsquedas de alumnos mediante uno o varios criterios de filtrado, incluyendo matrícula, nombre, apellidos, grado, grupo, ciclo escolar y estatus, permitiendo combinar diferentes filtros para reducir y localizar los resultados de manera eficiente.
+Búsqueda avanzada de pagos
+El sistema deberá permitir consultar y filtrar los registros de pagos mediante alumno, matrícula, grupo, ciclo escolar, periodo, concepto, estado del pago y rango de fechas.
+Búsqueda académica
+El sistema deberá permitir consultar información académica mediante alumno, grupo, materia, maestro, ciclo escolar, periodo y rango de calificaciones.
+	             SISTEMA ESCOLAR		
+	                       				
+	        ┌──────────────┼──────────────┐		
+	↓                        ↓                       ↓		
+	     ALUMNOS         PAGOS       ACADÉMICO		
+	│                     │                      │		
+	     filtros               filtros                filtros    		
+	        │                        │                            │    		
+	   resultados            resultados             resultados  		
+					
+					
+Alumno → Grupo → Maestros → Materias → Calificaciones → Finanzas → Pagos.
+¿Qué información mececita el usuario para encontrar rápidamente un registro entre muchos registros?
+	En nuestro sistema, el principal candidato es el módulo de ALUMNOS.
+	En lugar de tener:
+	🔎 Buscar alumno: [____________]
+	Buscaremos implementar en el rubro Búsqueda avanzada de alumnos
+	
+ 
+Filtro	Ejemplo
+Nombre / apellidos	Juan Pérez
+Matrícula	ALU-0258
+Grado	3°
+Grupo	A
+Ciclo escolar	2026-2027
+Estatus	Activo / Baja
+Maestro titular	María López
+Maestro auxiliar	Carlos García
+Finanzas	OK/Pendiente
+
+	Buscaremos implementar y permitir combinación de filtros
+	
+Grado: 3°				Matrícula	Alumno	Grado	Grupo	Estatus	Finanzas
+Grupo: A		
+Resultado: 
+		ALU-001	Juan Pérez	3°	A	Activo	OK
+Estatus: Activo			ALU-015	Ana López	3°	A	Activo	Pendiente
+Finanzas: OK/Pendiente			ALU-032	Pedro García	3°	A	Activo	Pendiente
+
+Ideas de búsquedas avanzadas por rubros con oportunidad
+	
+ALUMNOS			PAGOS					
+									
+Filtros:				Filtros: 					
+	Matrícula	Alumno				Alumno	Concepto	Importe	Estado
+	Nombre	Matrícula				Juan Pérez	Septiembre	$2,000	🔴 Pendiente
+	Apellidos	Grado				Ana López	Septiembre	$2,000	🟢 Pagado
+	Grado	Grupo		
+Resultado: 
+		Pedro García	Septiembre	$2,000	🔴 Pendiente
+	Grupo	Mes							
+	Ciclo escolar	Año		B.A.1					
+	Estatus	Concepto							
+	Maestro	Estado del pago	
+B.A.2
+					
+		Método de pago			ALUMOS CON ADEUDO EN SEPTIEMBRE
+		Rango de fechas						
+
+
+
+
+
+Validación de la Información.
+Nuestro proyecto academico, se han identificado mecanimsos de validación en la interfaz de usuario, datos obligatorios, formatos de entrada, expresiones regulares, campos de confirmación (FrontEnd). Tambien se buscará identificar los mecanismos de validación en el lado del servidor (BackEnd).
+En nuestro proyecto los formularios contarán con validación de datos tanto en FrontEnd como en Backend, justificando esto para la escalabilidad del proyecto.
+1. FrontEnd Vs BackEnd
+	
+USUARIO	
+   │	
+   ▼	
+┌─────────────────────┐
+│      FRONTEND       │
+│                     │	
+│ ¿El campo está      │
+│ vacío?              │	
+│ ¿Tiene formato      │
+│ correcto?           │
+│ ¿Es una fecha válida│
+│ ¿Coinciden campos?  │
+└─────────┬───────────┘
+          │	
+          ▼	
+       BACKEND	
+┌─────────────────────┐
+│ ¿El dato es único?  │
+│ ¿Es coherente?      │
+│ ¿Tiene formato?     │
+│ ¿Puede realizarse   │
+│ esta operación?     │
+└─────────┬───────────┘
+          │	
+          ▼	
+       BASE DE DATOS
+
+El FrontEnd mejora la expriencia del usuario, pero el BackEnd es quien debe garantizar la integridad de los datos.
+
+
+
+
+
+2. Datos obligatorios – FrontEnd
+	
+Registrar alumno
+	
+Matrícula *	
+Nombre *	
+Apellido paterno *
+Apellido materno
+Fecha de nacimiento *
+Grado *	
+Grupo *	
+Tutor *	
+Teléfono *	
+	
+Los * indican campos obligatorios.
+
+3. Inventario de validaciones por módulo
+	
+👨🎓 Alumnos	👩🏫 Maestros
+📚 Académico	💰 Finanzas	👤 Usuarios
+Matrícula única	Número de empleado único	Calificación entre 0 y 10	Importe > 0	Usuario único
+Nombre obligatorio	Nombre obligatorio	Alumno existente	Alumno existente	Email único
+Fecha válida	Email válido		Materia existente	Concepto existente	Contraseña 
+obligatoria
+CURP	Materias existentes	Periodo válido	Fecha válida	Confirmación
+ de contraseña
+Teléfono			No duplicar calificación para 	No duplicar pago	Rol válido
+Tutor			alumno/materia/periodo	Folio único	
+Grupo existente						
+
+Implementaremos validaciones en dos niveles. En el FrontEnd validamos datos obligatorios, formatos, expresiones regulares y confirmaciones para proporcionar retroalimentación inmediata al usuario. En el BackEnd repetiremos y reforzamos estas validaciones, además de comprobar unicidad, coherencia e integridad de los datos antes de almacenarlos.
+Ejemplo: una matrícula debe tener un formato tipo ALU-02-0000 y además ser única.
+Aunque el usuario modifique la petición desde fuera del FrontEnd, el BackEnd rechaza una matrícula duplicada.
+ 
+4. Matriz de validación de información
+Capa: F = FrontEnd, B = BackEnd, F+B = ambos
+Módulo	Campo	Validación	Capa	Regla	Mensaje
+Alumnos	Matrícula	Obligatorio	F+B	No vacío	La matrícula es obligatoria
+Alumnos	Matrícula	Formato	F+B	ALU-0000	Formato de matrícula inválido
+Alumnos	Matrícula	Unicidad	B	No repetida	La matrícula ya está registrada
+Alumnos	Nombre	Obligatorio	F+B	Capturar	El nombre es obligatorio
+Alumnos	Nombre	Formato	F+B	Solo letras	El nombre contiene caracteres inválidos
+Alumnos	Apellido paterno	Obligatorio	F+B	Capturar	El apellido es obligatorio
+Alumnos	Apellido materno	Formato	F+B	Texto válido	Formato inválido
+Alumnos	Fecha nacimiento	Obligatorio	F+B	Debe existir	La fecha es obligatoria
+Alumnos	Fecha nacimiento	Coherencia	F+B	No futura	La fecha no es válida
+Alumnos	CURP	Formato	F+B	Formato oficial	CURP inválida
+Alumnos	CURP	Unicidad	B	No duplicar	La CURP ya está registrada
+Alumnos	Teléfono	Formato	F+B	10 dígitos	El teléfono debe tener 10 dígitos
+Alumnos	Correo tutor	Formato	F+B	Correo válido	Correo electrónico inválido
+Alumnos	Tutor	Obligatorio	F+B	Debe existir	Debe seleccionar un tutor
+Alumnos	Grado	Obligatorio	F+B	Seleccionar	Seleccione un grado
+Alumnos	Grado	Integridad	B	Existe en catálogo	El grado seleccionado no existe
+Alumnos	Grupo	Obligatorio	F+B	Seleccionar	Seleccione un grupo
+Alumnos	Grupo	Coherencia	B	Corresponde a grado/ciclo	Grupo no válido para el grado
+Alumnos	Ciclo escolar	Obligatorio	F+B	Debe existir	Seleccione ciclo escolar
+Alumnos	Estatus	Catálogo	F+B	Valores permitidos	Estatus inválido
+Grupos	Nombre	Obligatorio	F+B	Capturar	El grupo es obligatorio
+Grupos	Grado	Obligatorio	F+B	Debe existir	Grado inválido
+Grupos	Ciclo escolar	Obligatorio	F+B	Debe existir	Ciclo inválido
+Grupos	Grupo+grado+ciclo	Unicidad	B	No duplicar	El grupo ya existe
+Maestros	No. empleado	Obligatorio	F+B	Capturar	Número de empleado obligatorio
+Maestros	No. empleado	Formato	F+B	EMP-0000	Formato inválido
+Maestros	No. empleado	Unicidad	B	No duplicar	El empleado ya está registrado
+Maestros	Nombre	Obligatorio	F+B	Capturar	Nombre obligatorio
+Maestros	Correo	Formato	F+B	Correo válido	Correo inválido
+Maestros	Tipo	Catálogo	F+B	Titular/auxiliar/especialidad	Tipo de maestro inválido
+Materias	Nombre	Obligatorio	F+B	Capturar	La materia es obligatoria
+Materias	Nombre	Unicidad	B	No duplicar	La materia ya existe
+Materias	Estatus	Catálogo	F+B	Activa/Inactiva	Estatus inválido
+Asignaciones	Maestro-grupo	Coherencia	B	Ambos deben existir	Asignación inválida
+Asignaciones	Alumno-grupo	Coherencia	B	Alumno en el ciclo	Alumno no válido
+Asignaciones	Maestro-materia	Integridad	B	Materia existente	Materia inválida
+Calificaciones	Alumno	Obligatorio	F+B	Seleccionar	Seleccione un alumno
+Calificaciones	Materia	Obligatorio	F+B	Seleccionar	Seleccione una materia
+Calificaciones	Periodo	Obligatorio	F+B	Debe existir	Seleccione periodo
+Calificaciones	Calificación	Obligatorio	F+B	Capturar	La calificación es obligatoria
+Calificaciones	Calificación	Rango	F+B	0 a 10	La calificación debe estar entre 0 y 10
+Calificaciones	Calificación	Tipo	F+B	Numérico	Ingrese una calificación numérica
+Calificaciones	Alumno+materia+periodo	Unicidad	B	No duplicar	Ya existe una calificación
+Calificaciones	Alumno/materia	Coherencia	B	Alumno cursa la materia	La materia no corresponde al alumno
+Finanzas	Alumno	Obligatorio	F+B	Seleccionar	Seleccione alumno
+Finanzas	Concepto	Obligatorio	F+B	Debe existir	Seleccione concepto
+Finanzas	Concepto	Catálogo	F+B	Del catálogo	Concepto inválido
+Finanzas	Importe	Obligatorio	F+B	Capturar	El importe es obligatorio
+Finanzas	Importe	Formato	F+B	Valor monetario	Importe inválido
+Finanzas	Importe	Rango	F+B	Mayor a 0	El importe debe ser mayor a cero
+Finanzas	Fecha de pago	Obligatorio	F+B	Capturar	La fecha es obligatoria
+Finanzas	Fecha de pago	Coherencia	F+B	No futura	La fecha no puede ser futura
+Finanzas	Método de pago	Catálogo	F+B	Efectivo/transferencia/tarjeta	Método de pago inválido
+Finanzas	Folio recibo	Unicidad	B	Folio único	El folio ya existe
+Finanzas	Pago	Coherencia	B	Alumno existe	El alumno no existe
+Finanzas	Pago	Coherencia	B	No duplicar concepto pagado	El concepto ya fue registrado
+Finanzas	Pago	Integridad	B	Corresponde al ciclo	Ciclo escolar inválido
+Finanzas	Estado	Catálogo	F+B	Pagado/Pendiente/Parcial/Cancelado	Estado inválido
+Usuarios	Usuario	Obligatorio	F+B	Capturar	Usuario obligatorio
+Usuarios	Usuario	Unicidad	B	No duplicar	El usuario ya existe
+Usuarios	Correo	Formato	F+B	Correo válido	Correo inválido
+Usuarios	Contraseña	Obligatorio	F+B	Capturar	Contraseña obligatoria
+Usuarios	Contraseña	Seguridad	F+B	Longitud y complejidad	La contraseña no cumple los requisitos
+Usuarios	Confirmar contraseña	Confirmación	F+B	Coincide	Las contraseñas no coinciden
+Usuarios	Rol	Catálogo	F+B	Roles autorizados	Rol inválido
+General	Campos obligatorios	Presencia	F+B	No vacíos	Mostrar mensaje de validación
+General	Caracteres especiales	Formato	F+B	Evitar no permitidos	Entrada inválida
+General	Longitud	Formato	F+B	Mínimo y máximo	Excede longitud permitida
+General	Relaciones	Coherencia	B	Entidades existen	Rechazar operación
+General	Eliminación	Confirmación	F+B	Confirmar acción	Solicitar confirmación
+General	Eliminar relacionados	Integridad	B	Evitar huérfanos	Rechazar / baja lógica
+General	Operaciones duplicadas	Unicidad	B	Evitar reenvío	Registro duplicado
+General	Sesión / permisos	Autorización	F+B	Solo acciones permitidas	No autorizado
+
+5. Matriz de validación y seguridad de la información
+🔴 Seguridad obligatoria del MVP
+Son obligatoras y deben estar implementadas:
+1	Autenticación.	
+2	Contraseñas almacenadas mediante hash.
+3	Autorización por roles.
+4	Validación FrontEnd + BackEnd.
+5	Protección contra inyección SQL.
+6	Protección XSS.
+7	HTTPS cuando lo desplieguen.
+8	Protección de endpoints/API.
+9	No exponer credenciales en Git.
+10	Manejo seguro de errores.
+11	Restricción de acceso a información de alumnos.
+12	Validación de pagos.
+13	Folios únicos.	
+14	Bitácora de operaciones importantes.
+15	Backups.	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	Capa: F = FrontEnd, B = BackEnd, D = Base de datos / Infraestructura
+Área	Dato / Proceso	Riesgo	Mecanismo	Capa	Regla	Prioridad
+Autenticación	Usuario	Acceso no autorizado	Autenticación obligatoria	F+B+D	Nadie entra sin autenticarse	Alta
+Autenticación	Contraseña	Robo de credenciales	Política de contraseñas seguras	F+B+D	Longitud y complejidad mínima	Alta
+Autenticación	Contraseña	Exposición de credenciales	Hash seguro	B+D	Nunca guardar en texto plano	Crítica
+Autenticación	Confirmar contraseña	Error de captura	Confirmación	F+B	Ambas deben coincidir	Media
+Autenticación	Sesión	Secuestro de sesión	Gestión segura de sesiones	B+D	Sesiones protegidas con expiración	Alta
+Autenticación	Intentos de acceso	Fuerza bruta	Límite de intentos / bloqueo temporal	B+D	Limitar intentos fallidos	Alta
+Autorización	Roles	Acceso indebido	Control de acceso por roles	F+B	Solo funciones autorizadas	Crítica
+Autorización	Administrador	Privilegios excesivos	Mínimo privilegio	B+D	Solo permisos necesarios	Alta
+Autorización	Pagos	Modificación no autorizada	Permisos por módulo	F+B	Solo usuarios autorizados modifican pagos	Crítica
+Autorización	Calificaciones	Alteración no autorizada	Control de permisos	F+B	Solo personal autorizado modifica	Crítica
+Alumnos	Información personal	Exposición de datos	Control de acceso	F+B+D	Solo usuarios autorizados consultan	Crítica
+Alumnos	Datos de menores	Exposición sensible	Restricción de acceso	B+D	Limitar acceso según rol	Crítica
+Alumnos	Matrícula	Manipulación	Validación + unicidad	F+B+D	Válida y única	Alta
+Alumnos	CURP	Exposición / modificación	Autorización + protección	F+B+D	Mostrar solo a autorizados	Crítica
+Finanzas	Pagos	Manipulación financiera	Autorización	F+B+D	Solo roles autorizados registran	Crítica
+Finanzas	Importe	Manipulación	Validación de servidor	F+B+D	El servidor valida el importe	Crítica
+Finanzas	Folio	Duplicidad / fraude	Unicidad	B+D	Folio único por recibo	Crítica
+Finanzas	Historial de pagos	Alteración	Auditoría / bitácora	B+D	Registrar quién hizo la operación	Alta
+Finanzas	Recibo	Falsificación	Folio / identificador único	F+B+D	Cada recibo identificable	Alta
+Finanzas	Eliminación de pago	Pérdida / fraude	Restricción de eliminación	F+B+D	Preferir cancelación a eliminar	Crítica
+Calificaciones	Calificación	Manipulación	Autorización	F+B	Solo autorizados modifican	Crítica
+Calificaciones	Calificación	Valor incorrecto	Validación de rango	F+B+D	Valor entre 0 y 10	Alta
+Calificaciones	Historial académico	Alteración	Auditoría	B+D	Registrar cambios importantes	Alta
+Base de datos	Información general	Acceso directo	Restricción de acceso	B+D	BD no expuesta públicamente	Crítica
+Base de datos	Consultas	Inyección SQL	Consultas parametrizadas / ORM	B+D	Nunca concatenar entradas en SQL	Crítica
+Base de datos	Registros	Eliminación accidental	Restricciones de integridad	B+D	Proteger relaciones entre tablas	Alta
+Base de datos	Información	Pérdida de datos	Respaldos	D	Copias periódicas	Crítica
+Comunicación	Datos enviados	Intercepción	HTTPS / TLS	B+D	Cifrar cliente-servidor	Crítica
+Comunicación	Login	Robo de credenciales	HTTPS	F+B+D	Nunca enviar credenciales sin cifrar	Crítica
+API	Endpoints	Acceso no autorizado	Autenticación de API	B	Endpoints protegidos	Crítica
+API	Parámetros	Manipulación	Validación de entradas	F+B	Validar todos los datos recibidos	Alta
+API	Respuestas	Exposición de información	Control de datos devueltos	B	No devolver información innecesaria	Crítica
+API	Peticiones	Abuso	Rate limiting	B	Limitar solicitudes	Alta
+Frontend	Formularios	Código malicioso	Sanitización / escape	F+B	No interpretar entradas como HTML/JS	Alta
+Frontend	Campos de texto	XSS	Validación y escape de salida	F+B	Nunca confiar en lo ingresado	Crítica
+Usuarios	Correo	Suplantación	Validación	F+B	Validar formato y existencia	Media
+Usuarios	Rol	Escalamiento de privilegios	Autorización en servidor	B+D	Nadie cambia su propio rol	Crítica
+Usuarios	Cuenta	Baja de usuario	Control administrativo	F+B+D	Solo administrador desactiva cuentas	Alta
+Auditoría	Registro de acciones	Falta de trazabilidad	Bitácora / logs	B+D	Registrar operaciones relevantes	Alta
+Auditoría	Pago	Fraude / disputa	Registro de operación	B+D	Registrar quién, cuándo y qué	Crítica
+Auditoría	Calificación	Modificación indebida	Historial de cambios	B+D	Registrar modificaciones	Alta
+Sesiones	Cierre de sesión	Acceso posterior	Logout	F+B	Invalidar sesión/token al salir	Alta
+Sesiones	Inactividad	Uso indebido	Expiración automática	B	Cerrar sesión tras inactividad	Media
+Errores	Mensajes del sistema	Revelación de información	Manejo seguro de errores	F+B	No mostrar detalles internos	Alta
+Errores	API	Exposición técnica	Manejo de excepciones	B	Sin stack traces en producción	Alta
+Archivos	Documentos / recibos	Carga maliciosa	Validación de archivos	F+B+D	Validar extensión, tipo y tamaño	Alta
+Archivos	Documentos	Acceso indebido	Autorización	F+B+D	Solo autorizados descargan	Alta
+Privacidad	Datos personales	Exposición	Minimización de datos	F+B+D	Recopilar solo lo necesario	Alta
+Privacidad	Información escolar	Exposición	Control de acceso	F+B+D	Acceso según función	Crítica
+Seguridad general	Dependencias	Vulnerabilidades	Actualización de componentes	B+D	Mantener paquetes actualizados	Media
+Seguridad general	Configuración	Exposición	Variables de entorno	B+D	Sin credenciales en el código	Crítica
+Seguridad general	Código fuente	Exposición de secretos	Gestión de secretos	B+D	No subir contraseñas/API keys a Git	Crítica
+Seguridad general	Producción	Configuración insegura	Hardening	B+D	Deshabilitar configuración de desarrollo	Alta
+
