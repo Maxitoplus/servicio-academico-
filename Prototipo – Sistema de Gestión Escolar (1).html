@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sistema de Gestión Escolar – Prototipo</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
+--bg:#f4f6f8;--surface:#fff;--text:#1b2733;--muted:#5b6b7a;--line:#d5dce3;--brand:#1f5f8b;--brand-ink:#fff;--ok:#1d7a4d;--warn:#b26a00;--bad:#b3261e;--side:#16324a;--side-ink:#e8f0f6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#10161c;--surface:#18222b;--text:#e6edf3;--muted:#98a8b6;--line:#2c3a47;--brand:#5aa9dc;--brand-ink:#08141d;--ok:#4cc38a;--warn:#e0a04a;--bad:#f2766e;--side:#0b1822;--side-ink:#dbe7f1}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#10161c;--surface:#18222b;--text:#e6edf3;--muted:#98a8b6;--line:#2c3a47;--brand:#5aa9dc;--brand-ink:#08141d;--ok:#4cc38a;--warn:#e0a04a;--bad:#f2766e;--side:#0b1822;--side-ink:#dbe7f1}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 "Segoe UI",system-ui,"Helvetica Neue",sans-serif}
+a{color:inherit}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;background:var(--surface);padding:8px;z-index:9}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.side{background:var(--side);color:var(--side-ink);padding:16px 10px}
+.side h2{font-size:1rem;margin:0 8px 16px}
+.side ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.side a{display:block;padding:11px 12px;border-radius:8px;text-decoration:none}
+.side a:hover{background:rgba(255,255,255,.1)}
+.side a[aria-current="page"]{background:var(--brand);color:var(--brand-ink);font-weight:700}
+.main{display:flex;flex-direction:column;min-width:0}
+.top{display:flex;gap:12px;justify-content:flex-end;align-items:center;flex-wrap:wrap;padding:10px 24px;background:var(--surface);border-bottom:1px solid var(--line);font-size:.9rem}
+.badge{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:2px 10px;font-weight:700}
+.badge.ro{color:var(--warn)}
+main{padding:24px;max-width:1100px;width:100%}
+h1{margin:0 0 4px;font-size:1.6rem}.sub{color:var(--muted);margin:0 0 20px}
+.head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.kpi b{display:block;font-size:1.9rem}.kpi span{color:var(--muted);font-size:.9rem}
+.btn{min-height:44px;padding:0 18px;border-radius:8px;border:2px solid var(--brand);background:var(--surface);color:var(--brand);font:inherit;font-weight:700;cursor:pointer}
+.btn.p{background:var(--brand);color:var(--brand-ink)}
+.btn.s{min-height:36px;padding:0 12px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+caption{text-align:left;font-weight:700;padding-bottom:8px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:var(--bg);font-size:.85rem;color:var(--muted)}
+.st{font-weight:700}.st.Pagado,.st.Activo{color:var(--ok)}.st.Pendiente{color:var(--warn)}.st.Vencido{color:var(--bad)}
+form .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{display:grid;gap:4px;font-size:.85rem;font-weight:600}
+input,select{min-height:44px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
+fieldset{border:1px solid var(--line);border-radius:10px;margin:0 0 14px}
+.login{min-height:100vh;display:grid;place-items:center;padding:16px}
+.login .card{width:min(420px,100%);display:grid;gap:12px}
+.ficha{max-width:560px;border:2px dashed var(--line)}
+.bar{height:56px;background:repeating-linear-gradient(90deg,var(--text) 0 2px,transparent 2px 5px)}
+.flow{font-size:.85rem;color:var(--muted)}
+.chk{display:inline-block;width:16px;height:16px;border:2px solid var(--muted);border-radius:3px}
+.chk.on{background:var(--ok);border-color:var(--ok)}
+@media (max-width:760px){.shell{grid-template-columns:1fr}.side ul{display:flex;overflow-x:auto}.side a{white-space:nowrap}main{padding:16px}}
+@media print{.side,.top,.noprint{display:none}.shell{display:block}}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div id="app"></div>
+<script>
+const ROLES=["Administrador","Maestro","Padre de familia","Alumno","Recepcionista","Cajero escolar","RH"];
+const MODS=[["inicio","Inicio"],["alumnos","Alumnos"],["grupos","Grupos"],["docentes","Docentes"],["materias","Materias"],["pagos","Pagos"],["usuarios","Usuarios y roles"],["respaldos","Respaldos"]];
+const ACC={inicio:[0,1,2,3,4,5,6],alumnos:[0,1,2,3,4,5],grupos:[0,1,2,3,4,6],docentes:[0,1,6],materias:[0,1,2,3,4,6],pagos:[0,2,3,4,5],usuarios:[0],respaldos:[0]};
+const EDT={alumnos:[0,4],grupos:[0],docentes:[0,6],materias:[0],pagos:[0,5],usuarios:[0],respaldos:[0]};
+const S={role:null,q:"",
+al:[{m:"A001",n:"Ana Torres",g:"3° A",p:"Pagado"},{m:"A002",n:"Luis Pérez",g:"3° A",p:"Pendiente"},{m:"A003",n:"Marta Ruiz",g:"2° B",p:"Vencido"},{m:"A004",n:"Diego Soto",g:"1° A",p:"Pagado"}],
+gr:[{g:"1° A",n:28,t:"Laura Ramos"},{g:"2° B",n:25,t:"Pedro Gil"},{g:"3° A",n:30,t:"Sofía Luna"}],
+dc:["Laura Ramos","Pedro Gil","Sofía Luna"],
+ma:[{n:"Matemáticas",gr:"3°",p:"Sofía Luna"},{n:"Español",gr:"3°",p:"Laura Ramos"},{n:"Ciencias",gr:"2°",p:"Pedro Gil"}],
+pg:[{id:1,a:"Ana Torres",c:"Colegiatura octubre",$:1800,v:"31/10/2026",e:"Pagado"},{id:2,a:"Luis Pérez",c:"Colegiatura octubre",$:1800,v:"31/10/2026",e:"Pendiente"},{id:3,a:"Marta Ruiz",c:"Inscripción",$:2500,v:"15/09/2026",e:"Vencido"}],
+bk:[{f:"20/10/2026 00:00",t:"48 MB",e:"Correcto"}],ficha:null};
+const $=(s)=>document.querySelector(s);
+const esc=(t)=>String(t).replace(/[&<>"]/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const can=(m)=>S.role!==null&&(ACC[m]||[]).includes(S.role);
+const edit=(m)=>S.role!==null&&(EDT[m]||[]).includes(S.role);
+const own=()=>S.role===2||S.role===3;
+const money=(n)=>"$"+n.toLocaleString("es-MX");
+function ro(m){return edit(m)?"":'<span class="badge ro">Solo lectura</span>'}
+function views(t){
+ if(t==="inicio"){const k=own()?[["3° A","Mi grupo"],["1","Pagos pendientes"],["2","Materias"]]:[[S.al.length,"Alumnos activos"],[S.pg.filter(p=>p.e!=="Pagado").length,"Pagos pendientes"],[S.dc.length,"Docentes"],[4,"Trámites hoy"]];
+  return `<h1>Panel principal</h1><p class="sub">Resumen según tu rol.</p><section class="kpis" aria-label="Indicadores">${k.map(x=>`<article class="card kpi"><b>${x[0]}</b><span>${x[1]}</span></article>`).join("")}</section><section class="card"><h2>Accesos rápidos</h2><p>${MODS.filter(m=>m[0]!=="inicio"&&can(m[0])).map(m=>`<a class="btn s" href="#${m[0]}" style="display:inline-flex;align-items:center;margin:2px;text-decoration:none">${m[1]}</a>`).join("")}</p></section>`}
+ if(t==="alumnos"){let r=S.al.filter(a=>a.n.toLowerCase().includes(S.q.toLowerCase()));if(own())r=r.slice(0,1);if(S.role===1)r=r.filter(a=>a.g==="3° A");
+  return `<div class="head"><div><h1>Alumnos</h1><p class="sub">Expedientes y registro. ${ro("alumnos")}</p></div></div>
+  <section class="card"><label>Buscar alumno<input id="q" type="search" value="${esc(S.q)}" placeholder="Nombre o matrícula"></label></section>
+  <section class="card tw" id="lista">${tAl(r)}</section>
+  ${edit("alumnos")?`<section class="card"><h2>Registro de alumno</h2><form id="fAl"><fieldset><legend>Datos del alumno</legend><div class="g"><label>Nombre completo<input name="n" required></label><label>CURP<input name="c" maxlength="18"></label><label>Fecha de inscripción<input name="f" type="date" required></label><label>Año escolar<input name="y" value="2026-2027"></label><label>Curso<input name="cu" value="Primaria"></label><label>Grado<select name="gr"><option>1°</option><option>2°</option><option>3°</option></select></label><label>Grupo<select name="g"><option>1° A</option><option>2° B</option><option>3° A</option></select></label><label>Estatus de pago<select name="p"><option>Pendiente</option><option>Pagado</option></select></label></div></fieldset><fieldset><legend>Responsables</legend><div class="g"><label>Padre/madre a cargo<input name="pa" required></label><label>Tutor legal (opcional)<input name="tl"></label></div></fieldset><button class="btn p" type="submit">Guardar alumno</button> <span id="msg" role="status"></span></form></section>`:""}`}
+ if(t==="grupos")return `<h1>Grupos y tutor escolar</h1><p class="sub">${ro("grupos")}</p><section class="card tw"><table><caption>Grupos del ciclo 2026-2027</caption><thead><tr><th scope="col">Grupo</th><th scope="col">Alumnos</th><th scope="col">Maestro tutor</th></tr></thead><tbody>${S.gr.map((g,i)=>`<tr><th scope="row">${g.g}</th><td>${g.n}</td><td>${edit("grupos")?`<select data-gt="${i}" aria-label="Tutor de ${g.g}">${S.dc.map(d=>`<option${d===g.t?" selected":""}>${d}</option>`).join("")}</select>`:g.t}</td></tr>`).join("")}</tbody></table></section>`;
+ if(t==="docentes")return `<div class="head"><div><h1>Docentes</h1><p class="sub">${ro("docentes")}</p></div></div><section class="card tw"><table><caption>Personal docente</caption><thead><tr><th scope="col">Nombre</th><th scope="col">Materias</th><th scope="col">Tutor de</th></tr></thead><tbody>${S.dc.map(d=>`<tr><th scope="row">${d}</th><td>${S.ma.filter(m=>m.p===d).map(m=>m.n).join(", ")||"—"}</td><td>${(S.gr.find(g=>g.t===d)||{g:"—"}).g}</td></tr>`).join("")}</tbody></table></section>${edit("docentes")?`<section class="card"><form id="fDc" class="g"><label>Nuevo docente<input name="n" required></label><button class="btn p" style="align-self:end">Agregar docente</button></form></section>`:""}`;
+ if(t==="materias")return `<h1>Materias</h1><p class="sub">${ro("materias")}</p>${edit("materias")?`<section class="card"><h2>Registrar materia</h2><form id="fMa" class="g"><label>Nombre<input name="n" required></label><label>Grado<select name="gr"><option>1°</option><option>2°</option><option>3°</option></select></label><button class="btn p" style="align-self:end">Guardar materia</button></form></section>`:""}<section class="card tw"><table><caption>Asignación a profesores</caption><thead><tr><th scope="col">Materia</th><th scope="col">Grado</th><th scope="col">Profesor</th></tr></thead><tbody>${S.ma.map((m,i)=>`<tr><th scope="row">${esc(m.n)}</th><td>${m.gr}</td><td>${edit("materias")?`<select data-mp="${i}" aria-label="Profesor de ${esc(m.n)}">${S.dc.map(d=>`<option${d===m.p?" selected":""}>${d}</option>`).join("")}</select>`:m.p}</td></tr>`).join("")}</tbody></table></section>`;
+ if(t==="pagos"){const r=own()?S.pg.slice(0,2):S.pg;return `<div class="head"><div><h1>Control de pagos</h1><p class="sub">${ro("pagos")}</p></div></div><section class="card tw"><table><caption>Pagos y fichas</caption><thead><tr><th scope="col">Alumno</th><th scope="col">Concepto</th><th scope="col">Monto</th><th scope="col">Vence</th><th scope="col">Estatus</th><th scope="col">Acciones</th></tr></thead><tbody>${r.map(p=>`<tr><th scope="row">${p.a}</th><td>${p.c}</td><td>${money(p.$)}</td><td>${p.v}</td><td class="st ${p.e}">${p.e}</td><td><a class="btn s" href="#ficha" data-f="${p.id}" style="display:inline-flex;align-items:center;text-decoration:none">Ficha</a> ${edit("pagos")&&p.e!=="Pagado"?`<button class="btn s p" data-pay="${p.id}">Registrar pago</button>`:""}</td></tr>`).join("")}</tbody></table></section>`}
+ if(t==="ficha"){const p=S.pg.find(x=>x.id==S.ficha)||S.pg[0];return `<h1>Ficha de pago</h1><p class="sub"><a href="#pagos">← Volver a pagos</a></p><article class="card ficha"><h2>Folio ${String(p.id).padStart(5,"0")}</h2><dl><dt>Alumno</dt><dd>${p.a}</dd><dt>Concepto</dt><dd>${p.c}</dd><dt>Monto</dt><dd>${money(p.$)}</dd><dt>Fecha límite</dt><dd>${p.v}</dd></dl><div class="bar" role="img" aria-label="Código de referencia"></div></article><button class="btn p noprint" onclick="print()">Imprimir</button>`}
+ if(t==="usuarios"){const mods=["alumnos","grupos","docentes","materias","pagos","usuarios","respaldos"];return `<h1>Usuarios y roles</h1><p class="sub">Matriz de acceso por rol (solo el Administrador puede cambiarla).</p><section class="card tw"><table><caption>Acceso (✔ ver) y edición (✎)</caption><thead><tr><th scope="col">Rol</th>${mods.map(m=>`<th scope="col">${m}</th>`).join("")}</tr></thead><tbody>${ROLES.map((r,i)=>`<tr><th scope="row">${r}</th>${mods.map(m=>`<td>${ACC[m].includes(i)?"✔":"–"}${EDT[m]&&EDT[m].includes(i)?" ✎":""}</td>`).join("")}</tr>`).join("")}</tbody></table></section>`}
+ if(t==="respaldos")return `<div class="head"><div><h1>Respaldos</h1><p class="sub">Programados cada día a las 00:00.</p></div><button class="btn p" id="bk">Respaldar ahora</button></div><section class="card tw"><table><caption>Historial</caption><thead><tr><th scope="col">Fecha</th><th scope="col">Tamaño</th><th scope="col">Estado</th></tr></thead><tbody>${S.bk.map(b=>`<tr><td>${b.f}</td><td>${b.t}</td><td class="st Activo">${b.e}</td></tr>`).join("")}</tbody></table></section>`;
+ return "";}
+function tAl(r){return `<table><caption>Expedientes</caption><thead><tr><th scope="col">Matrícula</th><th scope="col">Alumno</th><th scope="col">Grupo</th><th scope="col">Pago</th></tr></thead><tbody>${r.map(a=>`<tr><td>${a.m}</td><th scope="row">${esc(a.n)}</th><td>${a.g}</td><td class="st ${a.p}">${a.p}</td></tr>`).join("")||'<tr><td colspan="4">Sin resultados</td></tr>'}</tbody></table>`}
+function render(){
+ let t=location.hash.slice(1)||"login";
+ if(S.role===null||t==="login"){S.role=null;$("#app").innerHTML=`<main class="login" id="contenido"><form class="card" id="fLog"><h1>[Logo] Gestión Escolar</h1><p class="sub">Inicia sesión para continuar (prototipo: elige un rol para ver el sistema desde su perspectiva).</p><label>Usuario<input name="u" autocomplete="username" required></label><label>Contraseña<input name="p" type="password" autocomplete="current-password" required></label><label>Rol asignado<select name="r">${ROLES.map((r,i)=>`<option value="${i}">${r}</option>`).join("")}</select></label><button class="btn p" type="submit">Entrar</button><details class="flow"><summary>Flujo de navegación</summary>Login → Inicio → Módulos permitidos por rol → Detalle o formulario → Ficha de pago. Salir regresa al login.</details></form></main>`;return}
+ const base=t==="ficha"?"pagos":t;if(!can(base))t=base="inicio";
+ $("#app").innerHTML=`<div class="shell"><nav class="side" aria-label="Principal"><h2>[Logo] Escuela</h2><ul>${MODS.filter(m=>can(m[0])).map(m=>`<li><a href="#${m[0]}"${m[0]===base?' aria-current="page"':""}>${m[1]}</a></li>`).join("")}</ul></nav><div class="main"><header class="top"><span>Usuario: [Nombre]</span><span class="badge">Rol: ${ROLES[S.role]}</span><a href="#login">Salir</a></header><main id="contenido" tabindex="-1">${views(t)}</main></div></div>`;
+ window.scrollTo(0,0)}
+document.addEventListener("submit",(e)=>{e.preventDefault();const f=e.target,d=new FormData(f);
+ if(f.id==="fLog"){S.role=+d.get("r");location.hash="#inicio";render()}
+ if(f.id==="fAl"){S.al.push({m:"A00"+(S.al.length+1),n:d.get("n"),g:d.get("g"),p:d.get("p")});render();$("#msg")&&($("#msg").textContent="Alumno guardado.")}
+ if(f.id==="fDc"){S.dc.push(d.get("n"));render()}
+ if(f.id==="fMa"){S.ma.push({n:d.get("n"),gr:d.get("gr"),p:S.dc[0]});render()}});
+document.addEventListener("input",(e)=>{if(e.target.id==="q"){S.q=e.target.value;$("#lista").innerHTML=tAl(S.al.filter(a=>a.n.toLowerCase().includes(S.q.toLowerCase())))}});
+document.addEventListener("change",(e)=>{const t=e.target.dataset;if(t.gt!==undefined)S.gr[t.gt].t=e.target.value;if(t.mp!==undefined)S.ma[t.mp].p=e.target.value});
+document.addEventListener("click",(e)=>{const b=e.target.closest("[data-pay],[data-f],#bk");if(!b)return;
+ if(b.dataset.pay){S.pg.find(p=>p.id==b.dataset.pay).e="Pagado";render()}
+ if(b.dataset.f)S.ficha=b.dataset.f;
+ if(b.id==="bk"){S.bk.unshift({f:new Date().toLocaleString("es-MX"),t:"49 MB",e:"Correcto"});render()}});
+window.addEventListener("hashchange",render);render();
+</script>
+</body>
+</html>
