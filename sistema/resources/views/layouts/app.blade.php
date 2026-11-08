@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>@yield('title', 'Sistema de Gestión Escolar')</title>
     <style>
-        /* Pegamos los estilos exactos del prototipo */
+        /* estilos del prototipo */
         :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light;
         --bg:#f4f6f8;--surface:#fff;--text:#1b2733;--muted:#5b6b7a;--line:#d5dce3;--brand:#1f5f8b;--brand-ink:#fff;--ok:#1d7a4d;--warn:#b26a00;--bad:#b3261e;--side:#16324a;--side-ink:#e8f0f6}
         @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#10161c;--surface:#18222b;--text:#e6edf3;--muted:#98a8b6;--line:#2c3a47;--brand:#5aa9dc;--brand-ink:#08141d;--ok:#4cc38a;--warn:#e0a04a;--bad:#f2766e;--side:#0b1822;--side-ink:#dbe7f1}}
@@ -54,11 +54,11 @@
 
         <div class="main">
             <!-- Barra superior simulada -->
-            <header class="top">
-                <span>Usuario: <strong>Jhonas</strong></span>
-                <span class="badge">Administrador</span>
-            </header>
-
+               <header class="top">
+                  <span>Usuario: <strong>{{ session('usuario', 'Invitado') }}</strong></span>
+                  <span class="badge">{{ session('rol', 'Sin Rol') }}</span>
+                  <a href="{{ route('logout') }}" style="margin-left: 15px; color: var(--bad); text-decoration: none; font-weight: bold;">Salir</a>
+               </header>
             <!-- Aquí se inyectará el contenido dinámico de cada página -->
             <main id="contenido">
                 @yield('content')

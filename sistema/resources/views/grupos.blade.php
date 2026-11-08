@@ -39,7 +39,7 @@
         </form>
     </section>
 
-    <!-- Tabla de Grupos (Datos del prototipo de tu equipo) -->
+    <!-- Tabla de Grupos (Datos del prototipo) -->
     <section class="card tw">
         <table>
             <caption>Lista de Grupos Activos</caption>

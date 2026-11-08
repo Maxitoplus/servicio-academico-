@@ -36,7 +36,7 @@
         </form>
     </section>
 
-    <!-- Tabla de Materias (Datos extraídos del prototipo de tu equipo) -->
+    <!-- Tabla de Materias  -->
     <section class="card tw">
         <table>
             <caption>Asignaturas Vigentes</caption>

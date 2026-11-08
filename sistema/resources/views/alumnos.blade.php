@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <!-- Formulario de Registro (Reutilizando el CSS de tu equipo) -->
+    <!-- Formulario de Registro (Reutilizando el CSS del equipo) -->
     <section class="card">
         <caption><h3>Registrar Nuevo Alumno</h3></caption>
         <form>
@@ -35,7 +35,7 @@
         </form>
     </section>
 
-    <!-- Tabla de Alumnos (Reutilizando el CSS de tu equipo) -->
+    <!-- Tabla de Alumnos (Reutilizando el CSS del equipo) -->
     <section class="card tw">
         <table>
             <caption>Lista de Alumnos Inscritos</caption>

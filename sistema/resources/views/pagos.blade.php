@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <!-- Indicador Financiero Exigido por el Maestro -->
+    <!-- Indicador Financiero -->
     <section class="kpis" aria-label="Indicadores Financieros">
         <article class="card kpi">
             <b style="color: var(--bad);">$3,600.00</b>

@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <!-- Indicadores KPIs del prototipo de tu equipo -->
+    <!-- Indicadores KPIs del prototipo -->
     <section class="kpis" aria-label="Indicadores">
         <article class="card kpi">
             <b>4</b>

@@ -34,7 +34,7 @@
         </form>
     </section>
 
-    <!-- Tabla de Docentes (Usando los datos del prototipo de tu equipo) -->
+    <!-- Tabla de Docentes -->
     <section class="card tw">
         <table>
             <caption>Lista de Profesores Activos</caption>
