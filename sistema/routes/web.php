@@ -1,55 +1,56 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Middleware\EnsureActiveUser;
+use App\Http\Middleware\EnsureTwoFactorEnabled;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
-// 1. Flujo de Autenticación Seguro
-Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'autenticar'])->name('login.autenticar');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+// Configuración inicial del 2FA
+Route::middleware([
+    'auth',
+    EnsureActiveUser::class,
+    'password.confirm',
+])->group(function () {
 
-// 2. Panel Principal (Con redirección automática si entra el cajero)
-Route::get('/', function () { 
-    if (!session()->has('usuario')) return redirect()->route('login');
-    if (session('rol') === 'Cajero Escolar') return redirect()->route('pagos');
-    return view('home'); 
-})->name('home');
+    Route::get('/configurar-2fa', function () {
+        return view('auth.two-factor-setup');
+    })->name('two-factor.setup');
 
-// 3. Vistas Protegidas (Solo el Administrador puede entrar, el cajero es rebotado a pagos)
-Route::get('/alumnos', function () { 
-    if (!session()->has('usuario')) return redirect()->route('login');
-    if (session('rol') !== 'Administrador') return redirect()->route('pagos');
-    return view('alumnos'); 
-})->name('alumnos');
+});
 
-Route::get('/docentes', function () { 
-    if (!session()->has('usuario')) return redirect()->route('login');
-    if (session('rol') !== 'Administrador') return redirect()->route('pagos');
-    return view('docentes'); 
-})->name('docentes');
+// Rutas protegidas
+Route::middleware([
+    'auth',
+    EnsureActiveUser::class,
+    EnsureTwoFactorEnabled::class,
+])->group(function () {
 
-Route::get('/grupos', function () { 
-    if (!session()->has('usuario')) return redirect()->route('login');
-    if (session('rol') !== 'Administrador') return redirect()->route('pagos');
-    return view('grupos'); 
-})->name('grupos');
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('home');
 
-Route::get('/materias', function () { 
-    if (!session()->has('usuario')) return redirect()->route('login');
-    if (session('rol') !== 'Administrador') return redirect()->route('pagos');
-    return view('materias'); 
-})->name('materias');
+    Route::view('/alumnos', 'alumnos')
+        ->middleware(RoleMiddleware::class.':administrador,secretaria')
+        ->name('alumnos');
 
-// 4. Módulo Financiero (Bautizado correctamente para evitar errores)
-Route::get('/pagos', function () { 
-    if (!session()->has('usuario')) return redirect()->route('login');
-    return view('pagos'); 
-})->name('pagos');
+    Route::view('/docentes', 'docentes')
+        ->middleware(RoleMiddleware::class.':administrador')
+        ->name('docentes');
 
-Route::get('/pagos/ficha', function () { 
-    if (!session()->has('usuario')) return redirect()->route('login');
-    return view('ficha'); 
-})->name('ficha');
+    Route::view('/grupos', 'grupos')
+        ->middleware(RoleMiddleware::class.':administrador,secretaria')
+        ->name('grupos');
 
+    Route::view('/materias', 'materias')
+        ->middleware(RoleMiddleware::class.':administrador')
+        ->name('materias');
 
+    Route::view('/pagos', 'pagos')
+        ->middleware(RoleMiddleware::class.':administrador,cajero')
+        ->name('pagos');
 
+    Route::view('/pagos/ficha', 'ficha')
+        ->middleware(RoleMiddleware::class.':administrador,cajero')
+        ->name('ficha');
+
+});

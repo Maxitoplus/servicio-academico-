@@ -26,26 +26,56 @@
             <p style="text-align:center; margin:0; color:gray; font-size:.9rem;">Ingresa tus credenciales de acceso</p>
 
            {{-- En tu resources/views/login.blade.php --}}
-<form action="{{ route('login.autenticar') }}" method="POST" style="display:grid; gap:16px;">
-    @csrf {{-- Protección obligatoria contra ataques CSRF --}}
-    
-    @if ($errors->has('error_login'))
-        <div style="color: var(--bad); background: rgba(179,38,30,0.1); padding: 10px; border-radius: 8px; font-size: 0.85rem; text-align: center; font-weight: 600;">
-            {{ $errors->first('error_login') }}
+
+<form action="{{ url('/login') }}" method="POST"
+      style="display:grid; gap:16px;">
+
+    @csrf
+
+    @if ($errors->any())
+        <div style="
+            color:#b3261e;
+            background:rgba(179,38,30,0.1);
+            padding:10px;
+            border-radius:8px;
+            font-size:0.85rem;
+        ">
+            @foreach ($errors->all() as $error)
+                <div>{{ $error }}</div>
+            @endforeach
         </div>
     @endif
 
-    <label>Usuario o Correo Electrónico
-        <input type="email" name="email" placeholder="ejemplo@escuela.com" value="{{ old('email') }}" required>
+    <label>Correo electrónico
+        <input
+            type="email"
+            name="email"
+            placeholder="ejemplo@escuela.com"
+            value="{{ old('email') }}"
+            autocomplete="username"
+            required
+            autofocus
+        >
     </label>
+
     <label>Contraseña
-        <input type="password" name="password" placeholder="••••••••" required>
+        <input
+            type="password"
+            name="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+        >
     </label>
-    <button type="submit" class="btn">Iniciar Sesión</button>
+
+    <button type="submit" class="btn">
+        Iniciar sesión
+    </button>
+
 </form>
 
 
-
+ 
             <a href="#" class="sub">¿Olvidaste tu contraseña?</a>
         </article>
     </div>
