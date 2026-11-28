@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -13,32 +15,42 @@ class AuthController extends Controller
 
     public function autenticar(Request $request)
     {
-        // 1. Validación de campos (FrontEnd + BackEnd como pide la rúbrica)
-        $credentials = $request->validate([
+        // 1. Validación estricta de entrada (FrontEnd + BackEnd)
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:4',
         ]);
 
-        // 2. Simulación de cuentas basadas en los roles del reporte de la UTT
-        if ($request->email === 'admin@utt.edu.mx' && $request->password === '1234') {
-            session(['usuario' => 'Josué López', 'rol' => 'Administrador']);
+        // 2. Consulta real a la tabla 'users' en MySQL mediante Eloquent
+        $usuario = User::where('email', $request->email)->first();
+
+        // 3. Verificamos existencia, estado activo y contraseña encriptada (Hash::check)
+        if ($usuario && $usuario->activo && Hash::check($request->password, $usuario->password)) {
+            
+            // Guardamos la sesión oficial desde la base de datos
+            session([
+                'user_id' => $usuario->id,
+                'usuario' => $usuario->name,
+                'rol' => $usuario->rol
+            ]);
+
+            // Redirección dinámica según el rol registrado en MySQL
+            if ($usuario->rol === 'Cajero Escolar') {
+                return redirect()->route('pagos');
+            }
+
             return redirect()->route('home');
-        } 
-        
-        if ($request->email === 'cajero@utt.edu.mx' && $request->password === '1234') {
-            session(['usuario' => 'Ángel Ibáñez', 'rol' => 'Cajero Escolar']);
-            return redirect()->route('pagos');
         }
 
-        // 3. Manejo seguro de errores (No revela detalles internos)
+        // 4. Manejo seguro de errores (No revela si falló el correo o la clave)
         return back()->withErrors([
-            'error_login' => 'Las credenciales introducidas no coinciden con nuestros registros.',
+            'error_login' => 'Las credenciales no coinciden o la cuenta está inactiva.',
         ])->withInput();
     }
 
     public function logout()
     {
-        session()->forget(['usuario', 'rol']);
+        session()->forget(['user_id', 'usuario', 'rol']);
         return redirect()->route('login');
     }
 }
